@@ -48,7 +48,16 @@ Voliteľne najprv `git pull`:
 .\scripts\run_all_checks.ps1 --pull
 ```
 
-Potrebuje **`JAVA_HOME`** (pre Gradle) a **Python** v PATH (pre `pytest`). Ak Gradle preskočí, skontroluj premennú prostredia.
+Skript si vie **sám doplniť `JAVA_HOME`**, ak máš Android Studio v predvolenom umiestnení (`...\Android Studio\jbr`). Ak nie, dočasne:
+
+```powershell
+$env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
+.\scripts\run_all_checks.ps1
+```
+
+**Nepáruj príkazy:** testy sú zvlášť — `pytest agents/tests -v` — a skript je zvlášť (`.\scripts\run_all_checks.ps1`). Nie `pytest ... .\scripts\...`.
+
+Potrebuje aj **Python** v PATH pre `pytest`.
 
 ### Úplne automaticky podľa času (Windows)
 
