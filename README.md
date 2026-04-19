@@ -32,7 +32,17 @@ Ak `JAVA_HOME` nie je nastavené, nastav ho na JDK z Android Studia, napr.:
 |----|-----|
 | **Build na PC** | Terminál v koreňovom priečinku: `gradlew.bat assembleDebug` |
 | **Build v cloude** | Každý **push** na `main` spustí [Android CI](.github/workflows/android-ci.yml) → v **Actions** stiahni artifact **app-debug-apk** |
-| **Python agenti v CI** | Push, ktorý mení `agents/**`, spustí [Agents CI](.github/workflows/agents-ci.yml) (`pytest`) |
+| **Python agenti v CI** | Spustí sa pri **push** zmien v `agents/**`; navyše denne podľa **cron** (viď workflow) a ručne cez **Run workflow** |
+
+### Agent pipeline na GitHube („raz overím a potom nech to behá samé“)
+
+1. **Jednorazová kontrola:** na GitHube **Actions** vyber workflow **Agents CI** → **Run workflow** → musí byť zelený.
+2. **Potom automaticky:**
+   - pri každom **push** do `main`, ktorý mení `agents/` alebo tento workflow;
+   - **raz denne** (čas je v súbore [`agents-ci.yml`](.github/workflows/agents-ci.yml), úprava poľa `cron`);
+   - **GitHub po ~60 dňoch neaktivity v repozitári** vypne cron — stačí nový commit alebo znova zapnúť workflow.
+
+**Čo pipeline zatiaľ nerobí sama:** `retroportal-launch` (ADB na telefón) — na GitHub runneri nie je tvoje zariadenie; ten agent ostáva na PC alebo vlastnom runneri.
 
 ### „Všetko naraz“ na PC (jeden skript)
 
