@@ -40,40 +40,36 @@ function Set-JavaHomeFromStudio {
             }
         }
     } catch {
-        # ignore
     }
     return $false
 }
 
-# --- Volitelne: git pull ---
 if ($args -contains "--pull") {
-    Write-Host "`n>> git pull" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ">> git pull" -ForegroundColor Yellow
     git pull
 }
 
-# --- Android: Gradle ---
 $gradleBat = Join-Path $Root "gradlew.bat"
 if (-not (Test-Path $gradleBat)) {
     Write-Warning "gradlew.bat nenasiel — preskakujem Android build."
 } else {
     $null = Set-JavaHomeFromStudio
     if (-not $env:JAVA_HOME -or -not (Test-Path (Join-Path $env:JAVA_HOME "bin\java.exe"))) {
-        Write-Warning @"
-JAVA_HOME nie je nastavene a nepodarilo sa najst Android Studio JBR ani java v PATH.
-V PowerShelli (docasne v tejto session):
-  `$env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
-Potom znova spusti tento skript.
-"@
+        Write-Warning "JAVA_HOME nie je nastavene a nepodarilo sa najst Android Studio JBR ani java v PATH."
+        Write-Host "Skus docasne: `$env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'" -ForegroundColor Yellow
     } else {
-        Write-Host "`n>> gradlew.bat assembleDebug" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host ">> gradlew.bat assembleDebug" -ForegroundColor Yellow
         & $gradleBat assembleDebug --no-daemon
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     }
 }
 
-# --- Python agenti ---
-Write-Host "`n>> pytest agents" -ForegroundColor Yellow
+Write-Host ""
+Write-Host ">> pytest agents" -ForegroundColor Yellow
 python -m pytest agents/tests -v --tb=short
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-Write-Host "`n== Hotovo bez chyby ==" -ForegroundColor Green
+Write-Host ""
+Write-Host "== Hotovo bez chyby ==" -ForegroundColor Green
