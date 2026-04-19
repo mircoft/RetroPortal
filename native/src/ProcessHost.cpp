@@ -21,6 +21,9 @@
 #include <unordered_map>
 #include <vector>
 
+// Global process environment; must not live in an anonymous namespace (linker symbol).
+extern char** environ;
+
 namespace retroportal::proc {
 
 namespace {
@@ -104,8 +107,6 @@ bool BuildBigCoreMask(cpu_set_t* out_set, int ncpus) {
     }
     return CPU_COUNT(out_set) > 0;
 }
-
-extern char** environ;
 
 }  // namespace
 

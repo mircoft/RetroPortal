@@ -43,9 +43,7 @@ object NativeEngine {
 
     external fun nativeInjectRelativePointer(rx: Float, ry: Float)
 
-    companion object {
-        const val PERM_READ: Int = 1
-        const val PERM_WRITE: Int = 2
-        const val PERM_EXEC: Int = 4
-    }
+    const val PERM_READ: Int = 1
+    const val PERM_WRITE: Int = 2
+    const val PERM_EXEC: Int = 4
 }
