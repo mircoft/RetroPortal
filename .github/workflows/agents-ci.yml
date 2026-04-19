@@ -1,0 +1,29 @@
+name: Agents CI
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "agents/**"
+      - ".github/workflows/agents-ci.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "agents/**"
+      - ".github/workflows/agents-ci.yml"
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package + dev deps
+        run: pip install -e "./agents[dev]"
+
+      - name: Run tests
+        run: pytest agents/tests -v --tb=short
