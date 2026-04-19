@@ -34,6 +34,41 @@ Ak `JAVA_HOME` nie je nastavené, nastav ho na JDK z Android Studia, napr.:
 | **Build v cloude** | Každý **push** na `main` spustí [Android CI](.github/workflows/android-ci.yml) → v **Actions** stiahni artifact **app-debug-apk** |
 | **Python agenti v CI** | Push, ktorý mení `agents/**`, spustí [Agents CI](.github/workflows/agents-ci.yml) (`pytest`) |
 
+### „Všetko naraz“ na PC (jeden skript)
+
+Z koreňa repozitára (PowerShell):
+
+```powershell
+.\scripts\run_all_checks.ps1
+```
+
+Voliteľne najprv `git pull`:
+
+```powershell
+.\scripts\run_all_checks.ps1 --pull
+```
+
+Potrebuje **`JAVA_HOME`** (pre Gradle) a **Python** v PATH (pre `pytest`). Ak Gradle preskočí, skontroluj premennú prostredia.
+
+### Úplne automaticky podľa času (Windows)
+
+1. **Spúšťač úloh** (`taskschd.msc`) → **Vytvoriť úlohu**.
+2. Spúšťač: napr. denne alebo pri prihlásení.
+3. Akcia: **Program** `powershell.exe`, argumenty:
+
+   `-ExecutionPolicy Bypass -File "C:\Users\Mirco\Emulator\scripts\run_all_checks.ps1"`
+
+4. Do úlohy môžeš pridať aj **push na GitHub** (potom sa spustí CI v cloude):
+
+   ```powershell
+   git -C "C:\Users\Mirco\Emulator" pull
+   git -C "C:\Users\Mirco\Emulator" push
+   ```
+
+   (Vyžaduje uložené prihlásenie / SSH / uložený token.)
+
+**Čo sa nespustí „samé“ bez tvojho nastavenia:** inštalácia hier, pripojenie telefónu, `adb`, ani spúšťanie APK na zariadení — to vždy potrebuje zariadenie alebo emulátor.
+
 ---
 
 ## Python agenti (lokálne spustenie)
