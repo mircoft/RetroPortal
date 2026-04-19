@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retroportal-agents"
+version = "0.1.0"
+description = "Debugger, binary input scanner, manifest dependency resolver, and ADB autolauncher for RetroPortal"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pyyaml>=6.0.1",
+]
+
+[project.optional-dependencies]
+playwright = ["playwright>=1.40.0"]
+dev = ["pytest>=7.4.0", "mypy>=1.7.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[project.scripts]
+retroportal-hunter = "retroportal.hunter.game_hunter:main"
+retroportal-launch = "retroportal.autolaunch.auto_launcher:cli_main"

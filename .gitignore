@@ -1,0 +1,15 @@
+/.gradle/
+/build/
+**/build/
+/.idea/
+*.iml
+/local.properties
+.cxx/
+.externalNativeBuild/
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+agents/.venv/
+*.egg-info/

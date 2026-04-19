@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.RetroPortal" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/retroportal_primary</item>
+        <item name="android:windowBackground">@color/retroportal_surface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

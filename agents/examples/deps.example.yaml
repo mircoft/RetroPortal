@@ -1,0 +1,9 @@
+title: "Sample title (user-owned media)"
+dependencies:
+  - name: "vcredist_x86.exe"
+    url: "https://example.invalid/only-user-allowlisted-hosts"
+    sha256: null
+    notes: "Replace with a real Microsoft or vendor download you are licensed to use."
+  - name: "iv5play.dll"
+    local_path: "C:/Redist/iv5play.dll"
+    notes: "Indeo / user-provided codec pack"
